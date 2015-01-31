@@ -1,0 +1,20 @@
+<ivy-module version="2.0">
+  <info organisation="org.jwiemer" module="jacisexampleprj" revision="1.0" status="release"/>
+ <configurations>
+    <conf name="compile" />
+    <conf name="runtime" extends="compile" />
+    <conf name="test" extends="runtime" />
+	<conf name="optional" />
+    <conf name="win32" />
+    <conf name="win64" />
+    <conf name="linux64" />
+    <conf name="macos" />
+    <conf name="aix" />
+    <conf name="ant" />
+  </configurations>
+  <dependencies defaultconf="compile"
+    defaultconfmapping="compile->default;runtime->default;test->default;win32->default;win64->default;linux64->default;macos->default;aix->default;ant->default;docbook->default"
+  >
+    <dependency  org="org.jacis" name="jacis" rev="1.0" conf="compile"  />
+  </dependencies>
+</ivy-module> 

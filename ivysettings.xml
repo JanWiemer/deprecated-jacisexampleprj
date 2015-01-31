@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivysettings>
+  <settings defaultResolver="default"/>
+  <resolvers>
+    <chain name="default">
+      <ibiblio name="jacisrepository" root="https://github.com/JanWiemer/jacisreleases/raw/master/maven-repository/" m2compatible="true"/>
+      <!--url name="jacisrepository" m2compatible="true">
+        <artifact pattern="https://github.com/JanWiemer/jacisreleases/raw/master/maven-repository/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]"/>
+      </url-->  
+      <ibiblio name="central" m2compatible="true"/>
+    </chain>
+  </resolvers>
+</ivysettings>
