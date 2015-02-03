@@ -11,7 +11,7 @@ import org.jacisclient.JacisExample1.Account;
 /**
  * @author Jan Wiemer
  * 
- * Example 1: showing stream API to access JACIS store.
+ * Example 2: showing stream API to access JACIS store.
  *
  */
 public class JacisExample2 {
