@@ -1,77 +1,41 @@
+/*
+ * Copyright (c) 2016. Jan Wiemer
+ */
+
 package org.jacisclient;
 
 import org.jacis.container.JacisContainer;
 import org.jacis.container.JacisObjectTypeSpec;
-import org.jacis.plugin.cloning.JacisCloneable;
-import org.jacis.plugin.readonly.AbstractReadOnlyModeSupportingObject;
-import org.jacis.plugin.txadapter.JacisLocalTransaction;
+import org.jacis.plugin.objectadapter.cloning.JacisCloneable;
+import org.jacis.plugin.objectadapter.cloning.JacisCloningObjectAdapter;
+import org.jacis.plugin.readonly.object.AbstractReadOnlyModeSupportingObject;
+import org.jacis.plugin.txadapter.local.JacisLocalTransaction;
 import org.jacis.store.JacisStore;
 
 /**
- * @author Jan Wiemer
- * 
  * Example 1: showing basic usage of a JACIS store.
  *
+ * @author Jan Wiemer
  */
+@SuppressWarnings("WeakerAccess")
 public class JacisExample1 {
 
   // First we create a simple example class of objects that shall be stored in a transactional store.
   // The class implements the JacisCloneable interface to enable the store to clone the object without using reflection.
-  // Furthermore the class extends the AbstractReadOnlyModeSupportingObject (implementing the JacisReadonlyModeSupport interface). 
-  // This means the object provides a secure read only mode. 
+  // Furthermore the class extends the AbstractReadOnlyModeSupportingObject (implementing the JacisReadonlyModeSupport interface).
+  // This means the object provides a secure read only mode.
   // It is the responsibility of an object implementing the JacisReadonlyModeSupport interface
   // to prevent any modification after the method switchToReadOnlyMode is called.
   // The AbstractReadOnlyModeSupportingObject provides a checkWritable method throwing an exception
   // if the object is in read only mode.
-
-  static class Account extends AbstractReadOnlyModeSupportingObject implements JacisCloneable<Account> {
-
-    private final String name;
-    private long balance;
-
-    public Account(String name) {
-      this.name = name;
-    }
-
-    @Override
-    public Account clone() {
-      try {
-        Account clone = (Account) super.clone();
-        return clone;
-      } catch (CloneNotSupportedException e) { // can never happen
-        throw new InternalError("Failed to clone " + this + "! " + e);
-      }
-    }
-
-    Account deposit(long amount) {
-      checkWritable();
-      balance += amount;
-      return this;
-    }
-
-    public Account withdraw(long amount) {
-      checkWritable();
-      balance -= amount;
-      return this;
-    }
-
-    public String getName() {
-      return name;
-    }
-
-    public long getBalance() {
-      return balance;
-    }
-
-  }
 
   public static void main(String[] args) {
     // first we initialize a JACIS container:
     JacisContainer container = new JacisContainer();
 
     // now we create a store for our example object:
-    JacisObjectTypeSpec<String, Account> objectTypeSpec = new JacisObjectTypeSpec<>(String.class, Account.class);
-    JacisStore<String, Account> store = container.createStore(objectTypeSpec);
+    JacisObjectTypeSpec<String, Account, Account> objectTypeSpec = new JacisObjectTypeSpec<>(String.class, Account.class, new JacisCloningObjectAdapter<>());
+    JacisStore<String, Account> store = container.createStore(objectTypeSpec).getStore();
 
     // now we start a transaction
     JacisLocalTransaction tx = container.beginLocalTransaction();
@@ -79,11 +43,11 @@ public class JacisExample1 {
     Account account1 = new Account("account1");
     // modifications (and creation of new objects) have to be notified to the store by calling:
     store.update(account1.getName(), account1);
-    // now we commit the transaction. Afterwards all other transactions can see our new Account
+    // now we internalCommit the transaction. Afterwards all other transactions can see our new Account
     tx.commit();
 
     // we use a helper method executing some code inside a transaction to deposit some money on the account.
-    // Note that the update is necessary, otherwise the change will be lost after commit (try it)
+    // Note that the update is necessary, otherwise the change will be lost after internalCommit (try it)
     container.withLocalTx(() -> {
       Account acc = store.get("account1");
       acc.deposit(100);
@@ -114,6 +78,42 @@ public class JacisExample1 {
       Account acc = store.get("account1");
       System.out.println("balance of " + acc.getName() + ": " + acc.getBalance());
     });
+
+  }
+
+  static class Account extends AbstractReadOnlyModeSupportingObject implements JacisCloneable<Account> {
+
+    private final String name;
+    private long balance;
+
+    public Account(String name) {
+      this.name = name;
+    }
+
+    @Override
+    public Account clone() {
+      return (Account) super.clone();
+    }
+
+    Account deposit(long amount) {
+      checkWritable();
+      balance += amount;
+      return this;
+    }
+
+    public Account withdraw(long amount) {
+      checkWritable();
+      balance -= amount;
+      return this;
+    }
+
+    public String getName() {
+      return name;
+    }
+
+    public long getBalance() {
+      return balance;
+    }
 
   }
 }

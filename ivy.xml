@@ -15,6 +15,6 @@
   <dependencies defaultconf="compile"
     defaultconfmapping="compile->default;runtime->default;test->default;win32->default;win64->default;linux64->default;macos->default;aix->default;ant->default;docbook->default"
   >
-    <dependency  org="org.jacis" name="jacis" rev="1.0" conf="compile"  />
+    <dependency  org="org.jacis" name="jacis" rev="1.28" conf="compile"  />
   </dependencies>
 </ivy-module> 

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2016. Jan Wiemer
+ */
+
 package org.jacisclient;
 
 import java.util.Comparator;
@@ -5,23 +9,24 @@ import java.util.stream.Collectors;
 
 import org.jacis.container.JacisContainer;
 import org.jacis.container.JacisObjectTypeSpec;
+import org.jacis.plugin.objectadapter.cloning.JacisCloningObjectAdapter;
 import org.jacis.store.JacisStore;
 import org.jacisclient.JacisExample1.Account;
 
 /**
- * @author Jan Wiemer
- * 
  * Example 2: showing stream API to access JACIS store.
  *
+ * @author Jan Wiemer
  */
+@SuppressWarnings({ "WeakerAccess", "CodeBlock2Expr" })
 public class JacisExample2 {
 
   // Note that we use the same account object introduced for the first example
 
   public static void main(String[] args) {
     JacisContainer container = new JacisContainer();
-    JacisObjectTypeSpec<String, Account> objectTypeSpec = new JacisObjectTypeSpec<>(String.class, Account.class);
-    JacisStore<String, Account> store = container.createStore(objectTypeSpec);
+    JacisObjectTypeSpec<String, Account, Account> objectTypeSpec = new JacisObjectTypeSpec<>(String.class, Account.class, new JacisCloningObjectAdapter<>());
+    JacisStore<String, Account> store = container.createStore(objectTypeSpec).getStore();
 
     // First we create some accounts to have some test data...
 
@@ -39,7 +44,7 @@ public class JacisExample2 {
     });
 
     // Now we show some examples how to use the stream API (note read only access is possible without a transaction)
-    System.out.println("sum=" + store.streamReadOnly().mapToLong(acc -> acc.getBalance()).sum());
+    System.out.println("sum=" + store.streamReadOnly().mapToLong(Account::getBalance).sum());
     // starting with a filter
     System.out.println("#>500=" + store.streamReadOnly(acc -> acc.getBalance() > 500).count());
     // adding 10% interest
@@ -50,7 +55,7 @@ public class JacisExample2 {
     });
     // output all accounts
     String str = store.streamReadOnly().//
-        sorted(Comparator.comparing(acc -> acc.getName())). //
+        sorted(Comparator.comparing(Account::getName)). //
         map(acc -> acc.getName() + ":" + acc.getBalance()).//
         collect(Collectors.joining(", "));
     System.out.println("Accounts: " + str);
