@@ -1,26 +1,43 @@
-apply plugin: 'java'
-apply plugin: 'maven'
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
 
-sourceCompatibility = 1.8
-version = '1.0'
 group = 'org.jacisexampleproject'
+version = '1.55'
 
-jar {
+ext {
+    projectName            = "JacisExampleProject"
+    projectDescription     = "Example Project using JACIS."
+    projectURL             = "https://github.com/JanWiemer/jacisexampleproject"
+    author                 = "Jan Wiemer"
+    authorId               = "JanWiemer"
+    authorPwd              = '5f68ebe5e8b4afaa2592f73c4cfaddd3864470fb' // read access token
+    jacisMavenUrl          = "https://maven.pkg.github.com/janwiemer/jacis"
+}
+
+
+jar.doFirst {
     manifest {
-        attributes 'Implementation-Title': 'Jacis Example Project',
-                   'Implementation-Version': 1.0,
-                   'Implementation-Vendor' : "Jan Wiemer"
-     }
- }
-
+        attributes 'Implementation-Title'     : projectName,
+                   'Implementation-Version'   : archiveVersion,
+                   'Specification-Title'      : new Date(),
+                   'Implementation-Vendor'    : author
+    }
+}
 
 repositories {
+    mavenLocal()
     mavenCentral()
-     maven {
-        url 'https://github.com/JanWiemer/jacisreleases/raw/master/maven-repository/'
+    maven {
+      credentials {
+        username authorId
+        password authorPwd
+      }
+       url jacisMavenUrl
     }
 }
 
 dependencies {
-    compile group: 'org.jacis', name: 'jacis', version: '1.28'
+    implementation group: 'org.jacis', name: 'jacis', version: '1.55-SNAPSHOT'
 }
