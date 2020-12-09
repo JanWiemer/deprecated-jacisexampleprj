@@ -12,7 +12,7 @@ ext {
     projectURL             = "https://github.com/JanWiemer/jacisexampleproject"
     author                 = "Jan Wiemer"
     authorId               = "JanWiemer"
-    authorPwd              = '5f68ebe5e8b4afaa2592f73c4cfaddd3864470fb' // read access token
+    authorPwd              = System.properties.get("githubPAT") // read access token for GitHub package access
     jacisMavenUrl          = "https://maven.pkg.github.com/janwiemer/jacis"
 }
 
