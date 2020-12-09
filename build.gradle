@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'org.jacisexampleproject'
-version = '1.55'
+version = '1.56'
 
 ext {
     projectName            = "JacisExampleProject"
@@ -39,5 +39,5 @@ repositories {
 }
 
 dependencies {
-    implementation group: 'org.jacis', name: 'jacis', version: '1.55-SNAPSHOT'
+    implementation group: 'org.jacis', name: 'jacis', version: '1.56'
 }
