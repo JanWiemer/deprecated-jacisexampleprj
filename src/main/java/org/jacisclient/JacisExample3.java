@@ -18,7 +18,7 @@ import org.jacisclient.JacisExample1.Account;
  *
  * @author Jan Wiemer
  */
-@SuppressWarnings({ "WeakerAccess", "CodeBlock2Expr" })
+@SuppressWarnings({ })
 public class JacisExample3 {
 
   // Note that we use the same account object introduced for the first example

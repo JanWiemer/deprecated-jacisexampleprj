@@ -17,7 +17,6 @@ import org.jacis.store.JacisStore;
  *
  * @author Jan Wiemer
  */
-@SuppressWarnings("WeakerAccess")
 public class JacisExample1 {
 
   // First we create a simple example class of objects that shall be stored in a transactional store.

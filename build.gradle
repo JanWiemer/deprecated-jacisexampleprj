@@ -4,7 +4,11 @@ plugins {
 }
 
 group = 'org.jacisexampleproject'
-version = '1.56'
+version = '2.0.0'
+
+dependencies {
+    implementation group: 'org.jacis', name: 'jacis', version: '2.0.0-SNAPSHOT'
+}
 
 ext {
     projectName            = "JacisExampleProject"
@@ -17,15 +21,6 @@ ext {
 }
 
 
-jar.doFirst {
-    manifest {
-        attributes 'Implementation-Title'     : projectName,
-                   'Implementation-Version'   : archiveVersion,
-                   'Specification-Title'      : new Date(),
-                   'Implementation-Vendor'    : author
-    }
-}
-
 repositories {
     mavenLocal()
     mavenCentral()
@@ -36,8 +31,4 @@ repositories {
       }
        url jacisMavenUrl
     }
-}
-
-dependencies {
-    implementation group: 'org.jacis', name: 'jacis', version: '1.56'
 }
