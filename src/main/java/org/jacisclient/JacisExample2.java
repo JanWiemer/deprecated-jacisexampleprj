@@ -18,7 +18,7 @@ import org.jacisclient.JacisExample1.Account;
  *
  * @author Jan Wiemer
  */
-@SuppressWarnings({ })
+@SuppressWarnings({})
 public class JacisExample2 {
 
   // Note that we use the same account object introduced for the first example
@@ -43,21 +43,55 @@ public class JacisExample2 {
       store.update("account9", new Account("account9").deposit(900));
     });
 
-    // Now we show some examples how to use the stream API (note read only access is possible without a transaction)
-    System.out.println("sum=" + store.streamReadOnly().mapToLong(Account::getBalance).sum());
-    // starting with a filter
-    System.out.println("#>500=" + store.streamReadOnly(acc -> acc.getBalance() > 500).count());
-    // adding 10% interest
+    // Now we show some examples how to use the stream API to access objects from the store:
     container.withLocalTx(() -> {
-      store.stream(acc -> acc.getBalance() > 0).forEach(acc -> {
-        store.update(acc.getName(), acc.deposit(acc.getBalance() / 10));
+
+      // using stream methods (compute the total balance of all stored accounts):
+      System.out.println("total balance=" + store.stream().mapToLong(Account::getBalance).sum());
+
+      // using a filter (count accounts with a balance > 500):
+      System.out.println("#>500=" + store.stream(acc -> acc.getBalance() > 500).count());
+
+      // looping through the elements (adding writing an output)
+      store.stream().forEach(acc -> {
+        System.out.println(" - account " + acc.getName() + ": balance = " + acc.getBalance());
       });
+
+      // output all accounts
+      String str = store.stream().//
+      sorted(Comparator.comparing(Account::getName)). //
+      map(acc -> acc.getName() + ":" + acc.getBalance()).//
+      collect(Collectors.joining(", "));
+      System.out.println("Accounts: " + str);
     });
-    // output all accounts
-    String str = store.streamReadOnly().//
-        sorted(Comparator.comparing(Account::getName)). //
-        map(acc -> acc.getName() + ":" + acc.getBalance()).//
-        collect(Collectors.joining(", "));
-    System.out.println("Accounts: " + str);
+
+    // -------------------------------
+
+    // Modification is lost after commit (update missing):
+    container.withLocalTx(() -> {
+      Account acc = store.get("account1");
+      acc.deposit(1000);
+    });
+
+    // Modification succeeds (first modification then update):
+    container.withLocalTx(() -> {
+      Account acc = store.get("account1");
+      acc.deposit(1000);
+      store.update("account1", acc);
+    });
+
+    // Modification succeeds (first update then modification):
+    container.withLocalTx(() -> {
+      Account acc = store.get("account1");
+      store.update("account1", acc);
+      acc.deposit(1000);
+    });
+
+    // looping and updating (adding 10% interest to all accounts with a positive balance)
+    container.withLocalTx(() -> {
+      store.stream(acc -> acc.getBalance() > 0) //
+          .forEach(acc -> store.update(acc.getName(), acc.deposit(acc.getBalance() / 10)));
+    });
+
   }
 }
