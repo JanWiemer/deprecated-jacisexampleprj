@@ -8,6 +8,8 @@ version = '2.0.0'
 
 dependencies {
     implementation group: 'org.jacis', name: 'jacis', version: '2.0.0-SNAPSHOT'
+    implementation group: 'one.microstream', name: 'storage.embedded', version: '04.00.00-MS-GA'
+    implementation group: 'one.microstream', name: 'storage.embedded.configuration', version: '04.00.00-MS-GA'
 }
 
 ext {
