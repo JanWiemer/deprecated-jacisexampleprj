@@ -84,7 +84,7 @@ public class JacisExample5TrackedViews {
     public void checkView(List<Account> values) {
       long checkValue = values.stream().mapToLong(Account::getBalance).sum();
       if (totalBalance != checkValue) {
-        throw new IllegalStateException("Corrupt view! Tracked value=" + totalBalance + " computed value=" + checkValue);
+        throw new IllegalStateException("Corrupt view! Tracked val=" + totalBalance + " check val=" + checkValue);
       }
     }
 
