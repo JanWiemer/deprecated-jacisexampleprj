@@ -16,7 +16,7 @@ import org.jacis.store.JacisStore;
  *
  * @author Jan Wiemer
  */
-public class JacisExample1 {
+public class JacisExample1GettingStarted {
 
   // First we create a simple example class of objects that shall be stored in a
   // transactional store.

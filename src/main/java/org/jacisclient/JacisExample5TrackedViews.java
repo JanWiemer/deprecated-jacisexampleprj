@@ -11,7 +11,7 @@ import org.jacis.container.JacisObjectTypeSpec;
 import org.jacis.plugin.objectadapter.cloning.JacisCloningObjectAdapter;
 import org.jacis.store.JacisStore;
 import org.jacis.trackedviews.TrackedView;
-import org.jacisclient.JacisExample1.Account;
+import org.jacisclient.JacisExample1GettingStarted.Account;
 
 /**
  * Example 4: using a tracked view.
@@ -19,7 +19,7 @@ import org.jacisclient.JacisExample1.Account;
  * @author Jan Wiemer
  */
 @SuppressWarnings({})
-public class JacisExample4 {
+public class JacisExample5TrackedViews {
 
   // Note that we use the same account object introduced for the first example
 

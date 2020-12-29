@@ -17,7 +17,7 @@ import org.jacis.store.JacisStore;
  *
  * @author Jan Wiemer
  */
-public class JacisExample3 {
+public class JacisExample3ReadOnlyApi {
 
   // Account object with support to switch between read-only-mode and read-write-mode
   static class Account extends AbstractReadOnlyModeSupportingObject implements JacisCloneable<Account> {

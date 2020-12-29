@@ -11,7 +11,7 @@ import org.jacis.container.JacisContainer;
 import org.jacis.container.JacisObjectTypeSpec;
 import org.jacis.plugin.objectadapter.cloning.JacisCloningObjectAdapter;
 import org.jacis.store.JacisStore;
-import org.jacisclient.JacisExample1.Account;
+import org.jacisclient.JacisExample1GettingStarted.Account;
 
 /**
  * Example 2: showing stream API to access JACIS store.
@@ -19,7 +19,7 @@ import org.jacisclient.JacisExample1.Account;
  * @author Jan Wiemer
  */
 @SuppressWarnings({})
-public class JacisExample2 {
+public class JacisExample2BasicApi {
 
   // Note that we use the same account object introduced for the first example
 
