@@ -29,9 +29,7 @@ public class JacisExample6PersistenceAdapterMicroStream {
       JacisObjectTypeSpec<String, Account, Account> objectTypeSpec //
           = new JacisObjectTypeSpec<>(String.class, Account.class, new JacisCloningObjectAdapter<>());
       // start a MicroStream storage manager
-      EmbeddedStorageManager storageManager = Configuration.Default() //
-          .createEmbeddedStorageFoundation() //
-          .createEmbeddedStorageManager();
+      EmbeddedStorageManager storageManager = createMicroStreamStorageManager();
       // setBase.createEmbeddedStorageManager();
       // set the persistence adapter extension using the storage manager
       objectTypeSpec.setPersistenceAdapter(new MicrostreamPersistenceAdapter<>(storageManager));
@@ -49,9 +47,7 @@ public class JacisExample6PersistenceAdapterMicroStream {
       JacisObjectTypeSpec<String, Account, Account> objectTypeSpec //
           = new JacisObjectTypeSpec<>(String.class, Account.class, new JacisCloningObjectAdapter<>());
       // start a MicroStream storage manager
-      EmbeddedStorageManager storageManager = Configuration.Default() //
-          .createEmbeddedStorageFoundation() //
-          .createEmbeddedStorageManager();
+      EmbeddedStorageManager storageManager = createMicroStreamStorageManager();
       // set the persistence adapter extension using the storage manager
       objectTypeSpec.setPersistenceAdapter(new MicrostreamPersistenceAdapter<>(storageManager));
       JacisStore<String, Account> store = container.createStore(objectTypeSpec).getStore();
@@ -63,4 +59,21 @@ public class JacisExample6PersistenceAdapterMicroStream {
     }
     System.exit(1);
   }
+
+  protected static EmbeddedStorageManager createMicroStreamStorageManager() {
+    EmbeddedStorageManager storageManager = Configuration.LoadIni("microstream.ini") //
+        .createEmbeddedStorageFoundation() //
+        .createEmbeddedStorageManager();
+    return storageManager;
+  }
+
+  protected static EmbeddedStorageManager createMicroStreamStorageManagerHardCoded() {
+    EmbeddedStorageManager storageManager = Configuration.Default() //
+        .setBaseDirectory("var/data-dir") //
+        .setBackupDirectory("var/backup-dir") //
+        .createEmbeddedStorageFoundation() //
+        .createEmbeddedStorageManager();
+    return storageManager;
+  }
+
 }

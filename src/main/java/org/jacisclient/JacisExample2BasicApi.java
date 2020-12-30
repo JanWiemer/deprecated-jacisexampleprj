@@ -18,7 +18,6 @@ import org.jacisclient.JacisExample1GettingStarted.Account;
  *
  * @author Jan Wiemer
  */
-@SuppressWarnings({})
 public class JacisExample2BasicApi {
 
   // Note that we use the same account object introduced for the first example

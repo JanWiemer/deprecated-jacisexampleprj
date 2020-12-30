@@ -16,7 +16,6 @@ import org.jacis.store.JacisStore;
  *
  * @author Jan Wiemer
  */
-@SuppressWarnings({})
 public class JacisExample4DirtyCheck {
 
   // Account object with dirty check support
