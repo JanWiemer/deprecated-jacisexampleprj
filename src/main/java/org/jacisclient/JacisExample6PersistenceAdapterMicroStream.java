@@ -7,6 +7,7 @@ package org.jacisclient;
 import org.jacis.container.JacisContainer;
 import org.jacis.container.JacisObjectTypeSpec;
 import org.jacis.extension.persistence.MicrostreamPersistenceAdapter;
+import org.jacis.extension.persistence.MicrostreamStorage;
 import org.jacis.plugin.objectadapter.cloning.JacisCloningObjectAdapter;
 import org.jacis.store.JacisStore;
 import org.jacisclient.JacisExample1GettingStarted.Account;
@@ -15,7 +16,7 @@ import one.microstream.storage.configuration.Configuration;
 import one.microstream.storage.types.EmbeddedStorageManager;
 
 /**
- * Example 6: MicroStream Persistance Adapter.
+ * Example 6: MicroStream Persistence Adapter.
  *
  * @author Jan Wiemer
  */
@@ -30,9 +31,11 @@ public class JacisExample6PersistenceAdapterMicroStream {
           = new JacisObjectTypeSpec<>(String.class, Account.class, new JacisCloningObjectAdapter<>());
       // start a MicroStream storage manager
       EmbeddedStorageManager storageManager = createMicroStreamStorageManager();
-      // setBase.createEmbeddedStorageManager();
-      // set the persistence adapter extension using the storage manager
-      objectTypeSpec.setPersistenceAdapter(new MicrostreamPersistenceAdapter<>(storageManager));
+      storageManager.start();
+      // create MicroStream storage:
+      MicrostreamStorage storage = new MicrostreamStorage(storageManager);
+      // create and set the persistence adapter extension
+      objectTypeSpec.setPersistenceAdapter(new MicrostreamPersistenceAdapter<>(storage));
       JacisStore<String, Account> store = container.createStore(objectTypeSpec).getStore();
       // create some objects
       container.withLocalTx(() -> {
@@ -48,8 +51,11 @@ public class JacisExample6PersistenceAdapterMicroStream {
           = new JacisObjectTypeSpec<>(String.class, Account.class, new JacisCloningObjectAdapter<>());
       // start a MicroStream storage manager
       EmbeddedStorageManager storageManager = createMicroStreamStorageManager();
-      // set the persistence adapter extension using the storage manager
-      objectTypeSpec.setPersistenceAdapter(new MicrostreamPersistenceAdapter<>(storageManager));
+      storageManager.start();
+      // create MicroStream storage:
+      MicrostreamStorage storage = new MicrostreamStorage(storageManager);
+      // create and set the persistence adapter extension
+      objectTypeSpec.setPersistenceAdapter(new MicrostreamPersistenceAdapter<>(storage));
       JacisStore<String, Account> store = container.createStore(objectTypeSpec).getStore();
       // check the objects are still in the store
       container.withLocalTx(() -> {
