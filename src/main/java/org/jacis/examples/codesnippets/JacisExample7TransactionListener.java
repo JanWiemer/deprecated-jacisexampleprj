@@ -2,16 +2,15 @@
  * Copyright (c) 2016. Jan Wiemer
  */
 
-package org.jacisclient;
+package org.jacis.examples.codesnippets;
 
 import org.jacis.container.JacisContainer;
 import org.jacis.container.JacisObjectTypeSpec;
 import org.jacis.container.JacisTransactionHandle;
+import org.jacis.examples.codesnippets.JacisExample1GettingStarted.Account;
 import org.jacis.plugin.JacisTransactionListener;
-import org.jacis.plugin.JacisTransactionListenerAdapter;
 import org.jacis.plugin.objectadapter.cloning.JacisCloningObjectAdapter;
 import org.jacis.store.JacisStore;
-import org.jacisclient.JacisExample1GettingStarted.Account;
 
 /**
  * Example 7: Transaction Listener.
@@ -20,7 +19,7 @@ import org.jacisclient.JacisExample1GettingStarted.Account;
  */
 public class JacisExample7TransactionListener {
 
-  static class ExampleJacisTransactionListener extends JacisTransactionListenerAdapter {
+  static class ExampleJacisTransactionListener implements JacisTransactionListener {
 
     @Override
     public void afterPrepare(JacisContainer container, JacisTransactionHandle tx) {

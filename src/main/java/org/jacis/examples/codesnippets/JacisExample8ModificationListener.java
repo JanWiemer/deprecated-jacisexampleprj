@@ -2,15 +2,15 @@
  * Copyright (c) 2016. Jan Wiemer
  */
 
-package org.jacisclient;
+package org.jacis.examples.codesnippets;
 
 import org.jacis.container.JacisContainer;
 import org.jacis.container.JacisObjectTypeSpec;
 import org.jacis.container.JacisTransactionHandle;
+import org.jacis.examples.codesnippets.JacisExample1GettingStarted.Account;
 import org.jacis.plugin.JacisModificationListener;
 import org.jacis.plugin.objectadapter.cloning.JacisCloningObjectAdapter;
 import org.jacis.store.JacisStore;
-import org.jacisclient.JacisExample1GettingStarted.Account;
 
 /**
  * Example 8: Modification Listener.

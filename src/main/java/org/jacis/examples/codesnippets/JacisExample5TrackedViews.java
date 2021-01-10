@@ -2,16 +2,16 @@
  * Copyright (c) 2016. Jan Wiemer
  */
 
-package org.jacisclient;
+package org.jacis.examples.codesnippets;
 
 import java.util.List;
 
 import org.jacis.container.JacisContainer;
 import org.jacis.container.JacisObjectTypeSpec;
+import org.jacis.examples.codesnippets.JacisExample1GettingStarted.Account;
 import org.jacis.plugin.objectadapter.cloning.JacisCloningObjectAdapter;
 import org.jacis.store.JacisStore;
 import org.jacis.trackedviews.TrackedView;
-import org.jacisclient.JacisExample1GettingStarted.Account;
 
 /**
  * Example 4: using a tracked view.

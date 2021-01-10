@@ -1,4 +1,6 @@
 # jacisexampleprj
+
 JACIS example project
 
-A very basic example project showing a gradle file and an ivy cnfiguration with JACIS as dependency.
+This project shows how to use JACIS by giving some basic code examples.
+The examples are used as well for the [JACIS documentation](https://github.com/JanWiemer/jacis/wiki).

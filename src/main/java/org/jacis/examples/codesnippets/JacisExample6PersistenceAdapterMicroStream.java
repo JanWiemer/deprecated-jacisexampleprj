@@ -2,15 +2,15 @@
  * Copyright (c) 2016. Jan Wiemer
  */
 
-package org.jacisclient;
+package org.jacis.examples.codesnippets;
 
 import org.jacis.container.JacisContainer;
 import org.jacis.container.JacisObjectTypeSpec;
+import org.jacis.examples.codesnippets.JacisExample1GettingStarted.Account;
 import org.jacis.extension.persistence.MicrostreamPersistenceAdapter;
 import org.jacis.extension.persistence.MicrostreamStorage;
 import org.jacis.plugin.objectadapter.cloning.JacisCloningObjectAdapter;
 import org.jacis.store.JacisStore;
-import org.jacisclient.JacisExample1GettingStarted.Account;
 
 import one.microstream.storage.configuration.Configuration;
 import one.microstream.storage.types.EmbeddedStorageManager;
